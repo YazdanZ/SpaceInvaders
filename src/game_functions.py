@@ -53,14 +53,26 @@ def update_screen(screen, ship, bullets, aliens):
     pygame.display.flip()
 
 
-def update_bullets(bullets):
+def update_bullets(bullets, aliens, screen, ship):
     """Update bullet positions"""
+    # check for collisions
+    if check_bullet_collision(bullets, aliens):
+        create_alien_fleet(screen, ship, aliens)
+
     bullets.update()
 
     # delete bullets that go outside the screen
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+
+
+def check_bullet_collision(bullets, aliens):
+    pygame.sprite.groupcollide(bullets, aliens, True, True)
+
+    if len(aliens) == 0:
+        bullets.empty()
+        return True
 
 
 def create_alien_fleet(screen, ship, aliens):
@@ -113,5 +125,5 @@ def check_fleet_edges(aliens):
 def change_fleet_direction(aliens):
     """Drop the fleet dows by a row and change directions"""
     for alien in aliens.sprites():
-        alien.rect.y += game_settings.ALIEN_SPEED_FACTOR
+        alien.rect.y += game_settings.FLEET_SPEED
     game_settings.FLEET_DIRECTION *= -1

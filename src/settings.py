@@ -1,7 +1,7 @@
 # display settings
 SCREEN_WIDTH = 650
 SCREEN_HEIGHT = 650
-BG_COLOR = (64, 64, 64)
+BG_COLOR = (40, 50, 77)
 
 # ship settings
 SHIP_SPEED_FACTOR = 0.4
@@ -16,3 +16,4 @@ BULLET_COLOR = (40, 140, 0)
 # alien settings
 ALIEN_SPEED_FACTOR = 0.1
 FLEET_DIRECTION = 1
+FLEET_SPEED = 4

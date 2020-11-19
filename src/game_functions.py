@@ -95,3 +95,23 @@ def create_alien(screen, aliens, alien_width, alien_num, row_number):
     alien.rect.x = alien.x
     alien.rect.y = alien.rect.height / 2 + 2 * alien.rect.height / 2 * row_number
     aliens.add(alien)
+
+
+def update_aliens(aliens):
+    """Update the alien fleet position"""
+    check_fleet_edges(aliens)
+    aliens.update()
+
+
+def check_fleet_edges(aliens):
+    for alien in aliens.sprites():
+        if alien.check_edge_collision():
+            change_fleet_direction(aliens)
+            break
+
+
+def change_fleet_direction(aliens):
+    """Drop the fleet dows by a row and change directions"""
+    for alien in aliens.sprites():
+        alien.rect.y += game_settings.ALIEN_SPEED_FACTOR
+    game_settings.FLEET_DIRECTION *= -1

@@ -1,5 +1,6 @@
 import sys
 import pygame
+from time import sleep
 
 from bullet import Bullet
 from alien import Alien
@@ -38,6 +39,7 @@ def fire_bullet(screen, ship, bullets):
     if len(bullets) < game_settings.BULLETS_ALLOWED_ON_SCREEN:
         bullet = Bullet(screen, ship)
         bullets.add(bullet)
+        # TODO: add sound effect over here
 
 
 def update_screen(screen, ship, bullets, aliens):
@@ -109,10 +111,24 @@ def create_alien(screen, aliens, alien_width, alien_num, row_number):
     aliens.add(alien)
 
 
-def update_aliens(aliens):
+def update_aliens(aliens, ship, bullets, screen):
     """Update the alien fleet position"""
     check_fleet_edges(aliens)
     aliens.update()
+
+    # alien ship collisions
+    if pygame.sprite.spritecollideany(ship, aliens):
+        hit_ship(aliens, bullets, screen, ship)
+
+
+def hit_ship(aliens, bullets, screen, ship):
+    """Respond to ship being hit by aliens"""
+    create_alien_fleet(screen, ship, aliens)
+
+    ship.center_ship()
+    aliens.empty()
+    bullets.empty()
+    sleep(0.5)
 
 
 def check_fleet_edges(aliens):

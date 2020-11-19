@@ -2,6 +2,7 @@ import sys
 import pygame
 
 from bullet import Bullet
+from alien import Alien
 import settings as game_settings
 
 
@@ -39,7 +40,7 @@ def fire_bullet(screen, ship, bullets):
         bullets.add(bullet)
 
 
-def update_screen(screen, ship, bullets, alien):
+def update_screen(screen, ship, bullets, aliens):
     """Redraw the screen and change to the new screen"""
     # redraw the screen
     screen.fill(game_settings.BG_COLOR)
@@ -48,7 +49,7 @@ def update_screen(screen, ship, bullets, alien):
         bullet.draw_bullet()
 
     ship.draw()
-    alien.draw()
+    aliens.draw(screen)
     pygame.display.flip()
 
 
@@ -60,3 +61,16 @@ def update_bullets(bullets):
     for bullet in bullets.copy():
         if(bullet.rect.bottom <= 0):
             bullets.remove(bullet)
+
+
+def create_alien_fleet(screen, aliens):
+    alien = Alien(screen)
+    alien_width = alien.rect.width / 2
+    available_horizontal_space = game_settings.SCREEN_WIDTH - 2 * alien_width
+    alien_number = int(available_horizontal_space / (2 * alien_width))
+
+    for alien_num in range(alien_number):
+        alien = Alien(screen)
+        alien.x = alien_width + 2 * alien_width * alien_num
+        alien.rect.x = alien.x
+        aliens.add(alien)

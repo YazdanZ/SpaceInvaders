@@ -20,7 +20,7 @@ def run_game():
     bullets = Group()
     aliens = Group()
 
-    game_functions.create_alien_fleet(screen, aliens)
+    game_functions.create_alien_fleet(screen, ship, aliens)
 
     # main loop of the game
     while True:

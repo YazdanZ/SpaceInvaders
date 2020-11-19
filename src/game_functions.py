@@ -39,7 +39,7 @@ def fire_bullet(screen, ship, bullets):
         bullets.add(bullet)
 
 
-def update_screen(screen, ship, bullets):
+def update_screen(screen, ship, bullets, alien):
     """Redraw the screen and change to the new screen"""
     # redraw the screen
     screen.fill(game_settings.BG_COLOR)
@@ -47,7 +47,8 @@ def update_screen(screen, ship, bullets):
     for bullet in bullets.sprites():
         bullet.draw_bullet()
 
-    ship.blit()
+    ship.draw()
+    alien.draw()
     pygame.display.flip()
 
 

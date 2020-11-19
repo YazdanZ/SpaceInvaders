@@ -1,4 +1,5 @@
 import pygame
+import settings as game_settings
 
 
 class Ship:
@@ -19,6 +20,8 @@ class Ship:
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
 
+        self.centerx = float(self.rect.centerx)
+
         # movement flags
         self.moving_right = False
         self.moving_left = False
@@ -26,10 +29,12 @@ class Ship:
     def update(self):
         """Update the position based on movement flags"""
         if self.moving_right:
-            self.rect.centerx += 1
+            self.centerx += game_settings.SHIP_SPEED_FACTOR
 
         if self.moving_left:
-            self.rect.centerx -= 1
+            self.centerx -= game_settings.SHIP_SPEED_FACTOR
+
+        self.rect.centerx = self.centerx
 
     def blit(self):
         """Draw the ship on its current location"""

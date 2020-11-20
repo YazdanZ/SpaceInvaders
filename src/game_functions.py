@@ -29,7 +29,7 @@ def check_keydown_event(event, ship, screen, bullets):
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_RIGHT:
             ship.moving_right = True
-        if event.key == pygame.K_LEFT:
+        elif event.key == pygame.K_LEFT:
             ship.moving_left = True
         elif event.key == pygame.K_SPACE:
             fire_bullet(screen, ship, bullets)
@@ -39,7 +39,20 @@ def fire_bullet(screen, ship, bullets):
     if len(bullets) < game_settings.BULLETS_ALLOWED_ON_SCREEN:
         bullet = Bullet(screen, ship)
         bullets.add(bullet)
-        # TODO: add sound effect over here
+        play_bullet_sound()
+
+
+def aliens_reached_bottom(screen, ship, aliens, bullets):
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            return True
+    return False
+
+
+def play_bullet_sound():
+    pygame.mixer.music.load("sounds/bullet.mp3")
+    pygame.mixer.music.play(0)
 
 
 def update_screen(screen, ship, bullets, aliens):
@@ -113,12 +126,14 @@ def create_alien(screen, aliens, alien_width, alien_num, row_number):
 
 def update_aliens(aliens, ship, bullets, screen):
     """Update the alien fleet position"""
-    check_fleet_edges(aliens)
-    aliens.update()
-
     # alien ship collisions
     if pygame.sprite.spritecollideany(ship, aliens):
         hit_ship(aliens, bullets, screen, ship)
+    if aliens_reached_bottom(screen, ship, aliens, bullets):
+        hit_ship(aliens, bullets, screen, ship)
+
+    check_fleet_edges(aliens)
+    aliens.update()
 
 
 def hit_ship(aliens, bullets, screen, ship):

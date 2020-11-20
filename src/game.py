@@ -15,6 +15,7 @@ def run_game():
         (game_settings.SCREEN_WIDTH, game_settings.SCREEN_HEIGHT)
     )
     pygame.display.set_caption("Space Invaders")
+    pygame.mouse.set_visible(False)
 
     game_stats = stats()
     ship = Ship(screen)
@@ -28,7 +29,7 @@ def run_game():
         game_functions.check_for_events(screen, ship, bullets)
         ship.update()
         game_functions.update_bullets(bullets, aliens, screen, ship)
-        game_functions.update_aliens(aliens, ship, bullets, ship)
+        game_functions.update_aliens(aliens, ship, bullets, screen)
         game_functions.update_screen(screen, ship, bullets, aliens)
 
 

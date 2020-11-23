@@ -10,3 +10,5 @@ Space Invaders game written in python using pygame
 <p align="center">
   <img src="https://github.com/Unixado/SpaceInvaders/blob/master/images/Preview.gif">
 </p>
+
+#### Inspired by: [ehmatthes](https://ehmatthes.github.io/)
